@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AxosnetModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="catCurrencies">
+    <Key>
+      <PropertyRef Name="currencyId" />
+    </Key>
+    <Property Name="currencyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="currency" Type="varchar" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="catSuppliers">
+    <Key>
+      <PropertyRef Name="supplierId" />
+    </Key>
+    <Property Name="supplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="supplier" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblReceipts">
+    <Key>
+      <PropertyRef Name="receiptId" />
+    </Key>
+    <Property Name="receiptId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="supplierId" Type="int" Nullable="false" />
+    <Property Name="amount" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="currencyId" Type="int" Nullable="false" />
+    <Property Name="date" Type="datetime" />
+    <Property Name="comment" Type="varchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="tblUsers">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_currencyId">
+    <End Role="catCurrencies" Type="Self.catCurrencies" Multiplicity="1" />
+    <End Role="tblReceipts" Type="Self.tblReceipts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="catCurrencies">
+        <PropertyRef Name="currencyId" />
+      </Principal>
+      <Dependent Role="tblReceipts">
+        <PropertyRef Name="currencyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_supplierId">
+    <End Role="catSuppliers" Type="Self.catSuppliers" Multiplicity="1" />
+    <End Role="tblReceipts" Type="Self.tblReceipts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="catSuppliers">
+        <PropertyRef Name="supplierId" />
+      </Principal>
+      <Dependent Role="tblReceipts">
+        <PropertyRef Name="supplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AxosnetModelStoreContainer">
+    <EntitySet Name="catCurrencies" EntityType="Self.catCurrencies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="catSuppliers" EntityType="Self.catSuppliers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblReceipts" EntityType="Self.tblReceipts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_currencyId" Association="Self.FK_currencyId">
+      <End Role="catCurrencies" EntitySet="catCurrencies" />
+      <End Role="tblReceipts" EntitySet="tblReceipts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_supplierId" Association="Self.FK_supplierId">
+      <End Role="catSuppliers" EntitySet="catSuppliers" />
+      <End Role="tblReceipts" EntitySet="tblReceipts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

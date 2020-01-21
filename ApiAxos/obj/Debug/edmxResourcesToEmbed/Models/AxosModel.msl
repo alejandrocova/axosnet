@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AxosnetModelStoreContainer" CdmEntityContainer="AxosnetEntities">
+    <EntitySetMapping Name="catCurrencies">
+      <EntityTypeMapping TypeName="AxosnetModel.catCurrencies">
+        <MappingFragment StoreEntitySet="catCurrencies">
+          <ScalarProperty Name="currencyId" ColumnName="currencyId" />
+          <ScalarProperty Name="currency" ColumnName="currency" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="catSuppliers">
+      <EntityTypeMapping TypeName="AxosnetModel.catSuppliers">
+        <MappingFragment StoreEntitySet="catSuppliers">
+          <ScalarProperty Name="supplierId" ColumnName="supplierId" />
+          <ScalarProperty Name="supplier" ColumnName="supplier" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblReceipts">
+      <EntityTypeMapping TypeName="AxosnetModel.tblReceipts">
+        <MappingFragment StoreEntitySet="tblReceipts">
+          <ScalarProperty Name="receiptId" ColumnName="receiptId" />
+          <ScalarProperty Name="supplierId" ColumnName="supplierId" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="currencyId" ColumnName="currencyId" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblUsers">
+      <EntityTypeMapping TypeName="AxosnetModel.tblUsers">
+        <MappingFragment StoreEntitySet="tblUsers">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

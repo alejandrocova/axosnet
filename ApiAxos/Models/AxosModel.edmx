@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AxosnetModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="catCurrencies">
+          <Key>
+            <PropertyRef Name="currencyId" />
+          </Key>
+          <Property Name="currencyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="currency" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="catSuppliers">
+          <Key>
+            <PropertyRef Name="supplierId" />
+          </Key>
+          <Property Name="supplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supplier" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblReceipts">
+          <Key>
+            <PropertyRef Name="receiptId" />
+          </Key>
+          <Property Name="receiptId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supplierId" Type="int" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="currencyId" Type="int" Nullable="false" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="comment" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="tblUsers">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_currencyId">
+          <End Role="catCurrencies" Type="Self.catCurrencies" Multiplicity="1" />
+          <End Role="tblReceipts" Type="Self.tblReceipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catCurrencies">
+              <PropertyRef Name="currencyId" />
+            </Principal>
+            <Dependent Role="tblReceipts">
+              <PropertyRef Name="currencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplierId">
+          <End Role="catSuppliers" Type="Self.catSuppliers" Multiplicity="1" />
+          <End Role="tblReceipts" Type="Self.tblReceipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catSuppliers">
+              <PropertyRef Name="supplierId" />
+            </Principal>
+            <Dependent Role="tblReceipts">
+              <PropertyRef Name="supplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AxosnetModelStoreContainer">
+          <EntitySet Name="catCurrencies" EntityType="Self.catCurrencies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="catSuppliers" EntityType="Self.catSuppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblReceipts" EntityType="Self.tblReceipts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_currencyId" Association="Self.FK_currencyId">
+            <End Role="catCurrencies" EntitySet="catCurrencies" />
+            <End Role="tblReceipts" EntitySet="tblReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplierId" Association="Self.FK_supplierId">
+            <End Role="catSuppliers" EntitySet="catSuppliers" />
+            <End Role="tblReceipts" EntitySet="tblReceipts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AxosnetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="catCurrencies">
+          <Key>
+            <PropertyRef Name="currencyId" />
+          </Key>
+          <Property Name="currencyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="currency" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblReceipts" Relationship="Self.FK_currencyId" FromRole="catCurrencies" ToRole="tblReceipts" />
+        </EntityType>
+        <EntityType Name="catSuppliers">
+          <Key>
+            <PropertyRef Name="supplierId" />
+          </Key>
+          <Property Name="supplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplier" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblReceipts" Relationship="Self.FK_supplierId" FromRole="catSuppliers" ToRole="tblReceipts" />
+        </EntityType>
+        <EntityType Name="tblReceipts">
+          <Key>
+            <PropertyRef Name="receiptId" />
+          </Key>
+          <Property Name="receiptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplierId" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="currencyId" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="catCurrencies" Relationship="Self.FK_currencyId" FromRole="tblReceipts" ToRole="catCurrencies" />
+          <NavigationProperty Name="catSuppliers" Relationship="Self.FK_supplierId" FromRole="tblReceipts" ToRole="catSuppliers" />
+        </EntityType>
+        <EntityType Name="tblUsers">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_currencyId">
+          <End Role="catCurrencies" Type="Self.catCurrencies" Multiplicity="1" />
+          <End Role="tblReceipts" Type="Self.tblReceipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catCurrencies">
+              <PropertyRef Name="currencyId" />
+            </Principal>
+            <Dependent Role="tblReceipts">
+              <PropertyRef Name="currencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplierId">
+          <End Role="catSuppliers" Type="Self.catSuppliers" Multiplicity="1" />
+          <End Role="tblReceipts" Type="Self.tblReceipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catSuppliers">
+              <PropertyRef Name="supplierId" />
+            </Principal>
+            <Dependent Role="tblReceipts">
+              <PropertyRef Name="supplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AxosnetEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="catCurrencies" EntityType="Self.catCurrencies" />
+          <EntitySet Name="catSuppliers" EntityType="Self.catSuppliers" />
+          <EntitySet Name="tblReceipts" EntityType="Self.tblReceipts" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUsers" />
+          <AssociationSet Name="FK_currencyId" Association="Self.FK_currencyId">
+            <End Role="catCurrencies" EntitySet="catCurrencies" />
+            <End Role="tblReceipts" EntitySet="tblReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplierId" Association="Self.FK_supplierId">
+            <End Role="catSuppliers" EntitySet="catSuppliers" />
+            <End Role="tblReceipts" EntitySet="tblReceipts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AxosnetModelStoreContainer" CdmEntityContainer="AxosnetEntities">
+          <EntitySetMapping Name="catCurrencies">
+            <EntityTypeMapping TypeName="AxosnetModel.catCurrencies">
+              <MappingFragment StoreEntitySet="catCurrencies">
+                <ScalarProperty Name="currencyId" ColumnName="currencyId" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="catSuppliers">
+            <EntityTypeMapping TypeName="AxosnetModel.catSuppliers">
+              <MappingFragment StoreEntitySet="catSuppliers">
+                <ScalarProperty Name="supplierId" ColumnName="supplierId" />
+                <ScalarProperty Name="supplier" ColumnName="supplier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblReceipts">
+            <EntityTypeMapping TypeName="AxosnetModel.tblReceipts">
+              <MappingFragment StoreEntitySet="tblReceipts">
+                <ScalarProperty Name="receiptId" ColumnName="receiptId" />
+                <ScalarProperty Name="supplierId" ColumnName="supplierId" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="currencyId" ColumnName="currencyId" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="AxosnetModel.tblUsers">
+              <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
