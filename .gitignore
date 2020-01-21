@@ -2,15 +2,12 @@
 
 # dependencies
 /.vs
-/node_modules
+/axosnet/node_modules
 /.pnp
 .pnp.js
 
-# testing
-/coverage
-
 # production
-/build
+/axosnet/build
 
 # misc
 .DS_Store
